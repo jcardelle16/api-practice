@@ -1,0 +1,34 @@
+---
+title: "USGS-data"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(dataRetrieval)
+```
+
+```{r}
+# Set parameters for the query
+
+siteNumber <- "11118500"
+parameterCd <- "00060" # Discharge
+startDate <- "2023-08-19"
+endDate <- "2023-08-22"
+
+```
+
+```{r}
+# Query the APIs
+discharge <- readNWISdv(siteNumber, parameterCd, startDate, endDate)
+```
+
+```{r}
+ggplot(data = discharge, aes(x = Date, y = X_00060_00003)) +
+  geom_line()
+
+max_discharge <- max(discharge$X_00060_00003)
+```
+
